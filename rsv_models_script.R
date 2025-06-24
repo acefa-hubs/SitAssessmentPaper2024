@@ -33,11 +33,15 @@ df_rsv <- df_rsv[order(df_rsv$time_index),]
 rstan::rstan_options(auto_write = TRUE)
 options(mc.cores = 4)
 
-# Loading Stan models
+# Loading stan model for Single Pathogen Bayesian P-Spline model
+# See Eales et al 2025, American Journal of Epidemiology: Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model
 ps_single_mod <- stan_model('stan/ps_single_final.stan')
 
 #############################################################################################################################################
 ## Fitting to RSV data (overall)
+# Single Pathogen Bayesian P-Spline model
+# See Eales et al 2025, American Journal of Epidemiology: Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model
+# Default options of days_per_knot = 5, and spline_degree = 3 used. Day-of-the-week effects are modelled (seperate effect for each day of the week (week_effect=7).
 
 # Calculate the locations of equally spaced knots
 knots <- get_knots(df_rsv$time_index, days_per_knot = 5, spline_degree = 3)
@@ -62,6 +66,9 @@ saveRDS(rsv_fit, paste('fitted_stan_models/', 'rsv_fit-overall.rds', sep=""))
 
 #############################################################################################################################################
 ## Fitting to RSV data (real-time analysis) (26 different time points)
+# Single Pathogen Bayesian P-Spline model
+# See Eales et al 2025, American Journal of Epidemiology: Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model
+# Default options of days_per_knot = 5, and spline_degree = 3 used. Day-of-the-week effects are modelled (seperate effect for each day of the week (week_effect=7).
 
 max_dates_considered <- max(df_rsv$notification_date) - seq(0, 7*25, by=7)
 
