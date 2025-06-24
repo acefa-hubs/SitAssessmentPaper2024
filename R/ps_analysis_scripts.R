@@ -1,7 +1,7 @@
 
-## Functions operating on random walk stan model fits
+## Functions operating on multi-pathogen Bayesian P-spline stan model fits
 
-# Function for getting knot locations
+## Function for getting the locations of knots
 get_knots <- function(X, days_per_knot, spline_degree=3){
    
   X <- as.numeric(X)
