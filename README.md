@@ -3,8 +3,10 @@ This code supports the paper "Temporal analysis of respiratory virus epidemics i
 
 ## Statistical methods
 We fit Single Pathogen Bayesian P-Spline models to RSV and SARS-CoV-2 case data, and Multi Pathogen Bayesian P-Spline models to influenza case data and typing/subtyping data. The statistical methods are described in full in:
+
 [Eales O, Windecker SM, McCaw JM, Shearer FM. Inferring temporal trends of multiple pathogens, variants, subtypes or serotypes from routine surveillance data. Am J Epidemiol. 2025; kwaf119.](https://academic.oup.com/aje/advance-article/doi/10.1093/aje/kwaf119/8158080)
-Specifically, the relevant methods are described in the sections: ‘Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model’. We use the default setting for Bayesian P-spline models used in the paper (days_per_knot = 5 days, spline_degree = 3). For the Multi Pathogen Bayesian P-spline model fit to influenza data we model the distinct dynamics of three pathogens (num_path = 3): influenza A H3N2, influenza A H1N1, and influenza B. 
+
+The relevant methods are described in the sections: ‘Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model’. We use the default settings for Bayesian P-spline models used in the paper (days_per_knot = 5 days, spline_degree = 3). For the Multi Pathogen Bayesian P-spline model fit to influenza data we model the distinct dynamics of three pathogens (num_path = 3): influenza A H3N2, influenza A H1N1, and influenza B. 
 
 
 ## Running the code
