@@ -35,12 +35,13 @@ df_cov <- df_cov[order(df_cov$time_index),]
 rstan::rstan_options(auto_write = TRUE)
 options(mc.cores = 4)
 
-# Loading stan model for the single pathogen Bayesian P-spline model
+# Loading stan model for the Single Pathogen Bayesian P-Spline model
 # See Eales et al 2025, American Journal of Epidemiology: Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model
 ps_single_mod <- stan_model('stan/ps_single_final.stan')
 
 #############################################################################################################################################
 ## Fitting to COVID data (overall)
+# Single Pathogen Bayesian P-Spline model
 # See Eales et al 2025, American Journal of Epidemiology: Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model
 # Default options of days_per_knot = 5, and spline_degree = 3 used. Day-of-the-week effects are modelled (seperate effect for each day of the week (week_effect=7).
 
@@ -67,6 +68,9 @@ saveRDS(cov_fit, paste('fitted_stan_models/', 'cov_fit-overall.rds', sep=""))
 
 #############################################################################################################################################
 ## Fitting to COVID data (real-time analysis)
+# Single Pathogen Bayesian P-Spline model
+# See Eales et al 2025, American Journal of Epidemiology: Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model
+# Default options of days_per_knot = 5, and spline_degree = 3 used. Day-of-the-week effects are modelled (seperate effect for each day of the week (week_effect=7).
 
 max_dates_considered <- max(df_cov$notification_date) - seq(0, 7*25, by=7)
 
