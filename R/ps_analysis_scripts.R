@@ -1,8 +1,15 @@
 
-## Functions operating on multi-pathogen Bayesian P-spline stan model fits
+### Functions operating on multi-pathogen Bayesian P-spline stan model fits
 
-## Function for getting the locations of knots
-get_knots <- function(X, days_per_knot, spline_degree=3){
+#' Function for getting the location of knots (required for fitting P-spline models)
+#'
+#' @param X list of dates/days over which the time series (for model fitting) is defined.
+#' @param days_per_knot the number of days between each knot (default of 5 days is used in all analysis)
+#' @param spline_degree the spline degree used for the model (default of degree 3 is used in all analysis)
+#'
+#' @return location of knots
+#'
+get_knots <- function(X, days_per_knot=5, spline_degree=3){
    
   X <- as.numeric(X)
   
@@ -16,8 +23,19 @@ get_knots <- function(X, days_per_knot, spline_degree=3){
 }
 
 
-
-# Returns data.frame() of modeled incidence
+#' Function for estimating the model posterior of case incidence (median and credible intervals) for the multi-pathogen Bayesian P-spline model.
+#'
+#' @param ps_fit the stan fit of the multi-pathogen Bayesian P-spline model.
+#' @param X list of dates/days over which the time series is defined.
+#' @param num_days the number of dates/days (default is length of X).
+#' @param time_labels descriptive labels for the values of X (e.g. may wish to provide the as.Date() objects to make plotting easier later).
+#' @param days_per_knot the number of days between each knot (default of 5 days is used in all analysis.
+#' @param spline_degree the spline degree used for the model (default of degree 3 is used in all analysis).
+#' @param num_path the number of pathogens that were included in the multi pathogen Bayesian P-spline model (defaults to standard options for influenza-like illness).
+#' @param pathogen_names the names of the pathogens that were included in the multi pathogen Bayesian P-spline model fit (defaults to standard options for influenza-like illness).
+#'
+#' @return data.frame() of modelled case incidence for each pathogen
+#'
 ps_incidence <- function(ps_fit,
                          X,
                          num_days = length(X), time_labels,
@@ -89,7 +107,21 @@ ps_incidence <- function(ps_fit,
 }
 
 
-
+#' Function for estimating the model posterior of case incidence including day-of-the-week effects (median and credible intervals) for the multi-pathogen Bayesian P-spline model.
+#'
+#' @param ps_fit the stan fit of the multi-pathogen Bayesian P-spline model.
+#' @param X list of dates/days over which the time series is defined.
+#' @param num_days the number of dates/days (default is length of X).
+#' @param time_labels descriptive labels for the values of X (e.g. may wish to provide the as.Date() objects to make plotting easier later).
+#' @param DOW numerical values describing the group of each value in the X time series if distinct effects were included for distinct days (i.e. repeating values of 1:7 when each day of week has a seperate effect)
+#' @param week_effect number descirbing the number of days that are modelled as having distinct effects (i.e. week_effect=7 when each day of week has a seperate effect)
+#' @param days_per_knot the number of days between each knot (default of 5 days is used in all analysis.
+#' @param spline_degree the spline degree used for the model (default of degree 3 is used in all analysis).
+#' @param num_path the number of pathogens that were included in the multi pathogen Bayesian P-spline model (defaults to standard options for influenza-like illness).
+#' @param pathogen_names the names of the pathogens that were included in the multi pathogen Bayesian P-spline model fit (defaults to standard options for influenza-like illness).
+#'
+#' @return data.frame() of modelled case incidence including day-of-the-week effects for each pathogen
+#'
 ps_incidence_dow <- function(ps_fit,
                          X,
                          num_days = length(X), time_labels, DOW, week_effect,
@@ -164,8 +196,21 @@ ps_incidence_dow <- function(ps_fit,
 
 
 
-
-# Returns data.frame() of modeled relative proportions of different pathogens (for comparison to data)
+#' Function for estimating the model posterior of relative proportions of different pathogens (median and credible intervals) for the multi-pathogen Bayesian P-spline model.
+#'
+#' @param ps_fit the stan fit of the multi-pathogen Bayesian P-spline model.
+#' @param X list of dates/days over which the time series is defined.
+#' @param num_days the number of dates/days (default is length of X).
+#' @param time_labels descriptive labels for the values of X (e.g. may wish to provide the as.Date() objects to make plotting easier later).
+#' @param days_per_knot the number of days between each knot (default of 5 days is used in all analysis.
+#' @param spline_degree the spline degree used for the model (default of degree 3 is used in all analysis).
+#' @param num_path the number of pathogens that were included in the multi pathogen Bayesian P-spline model (defaults to standard options for influenza-like illness).
+#' @param comb_num list of lists describing the pathogens to be included in the numerator of the proportions (deaults to standard options for influenza-like illness, see below)
+#' @param comb_den list of lists describing the pathogens to be included in the denominator of the proportions (deaults to standard options for influenza-like illness, see below)
+#' @param comb_names descriptive names descibing the different modelled relative proportions being estimated (deaults to standard options for influenza-like illness: prop influenza positive; prop influenza A; prop influenza B; prop H3N2 vs H1N1; prop H1N1 vs H3N2)
+#'
+#' @return data.frame() of modelled relative proportions of different pathogens (for comparison to data)
+#'
 ps_proportion <- function(ps_fit,
                          X,
                          num_days = length(X), time_labels,
@@ -242,7 +287,19 @@ ps_proportion <- function(ps_fit,
 
 
 
-# Returns data.frame() of modeled growth rates
+#' Function for estimating the model posterior of growth rates (median and credible intervals) for the multi-pathogen Bayesian P-spline model.
+#'
+#' @param ps_fit the stan fit of the multi-pathogen Bayesian P-spline model.
+#' @param X list of dates/days over which the time series is defined.
+#' @param num_days the number of dates/days (default is length of X).
+#' @param time_labels descriptive labels for the values of X (e.g. may wish to provide the as.Date() objects to make plotting easier later).
+#' @param days_per_knot the number of days between each knot (default of 5 days is used in all analysis.
+#' @param spline_degree the spline degree used for the model (default of degree 3 is used in all analysis).
+#' @param num_path the number of pathogens that were included in the multi pathogen Bayesian P-spline model (defaults to standard options for influenza-like illness).
+#' @param pathogen_names the names of the pathogens that were included in the multi pathogen Bayesian P-spline model fit (defaults to standard options for influenza-like illness).
+#'
+#' @return data.frame() of modelled growth rates for each pathogen
+#'
 ps_growth_rate <- function(ps_fit,
                            X,
                            num_days = length(X), time_labels,
@@ -321,7 +378,21 @@ ps_growth_rate <- function(ps_fit,
 }
 
 
-# Returns data.frame() of modeled growth rates
+#' Function for estimating the model posterior of time-varying reproduction numbers (median and credible intervals) for the multi-pathogen Bayesian P-spline model.
+#'
+#' @param ps_fit the stan fit of the multi-pathogen Bayesian P-spline model.
+#' @param X list of dates/days over which the time series is defined.
+#' @param num_days the number of dates/days (default is length of X).
+#' @param time_labels descriptive labels for the values of X (e.g. may wish to provide the as.Date() objects to make plotting easier later).
+#' @param tau_max the maximum number of previous days to consider when calculating Rt from the modelled case time-series: R(t) = I(t) / integral_0^tau_max( I(t-tau) g(tau) dtau )
+#' @param gi_dist function that returns the value of the generation interval for different value of tau (the ammount of time before time t - see above equation)
+#' @param days_per_knot the number of days between each knot (default of 5 days is used in all analysis.
+#' @param spline_degree the spline degree used for the model (default of degree 3 is used in all analysis).
+#' @param num_path the number of pathogens that were included in the multi pathogen Bayesian P-spline model (defaults to standard options for influenza-like illness).
+#' @param pathogen_names the names of the pathogens that were included in the multi pathogen Bayesian P-spline model fit (defaults to standard options for influenza-like illness).
+#'
+#' @return data.frame() of modelled time-varying reproduction number for each pathogen
+#'
 ps_Rt <- function(ps_fit,
                   X,
                   num_days = length(X), time_labels,
