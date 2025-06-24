@@ -1,7 +1,17 @@
 
-## Functions operating on random walk stan model fits
+### Functions operating on single-pathogen Bayesian P-spline stan model fits
 
-# Returns data.frame() of modeled incidence
+#' Function for estimating the model posterior of case incidence (median and credible intervals) for the single-pathogen Bayesian P-spline model.
+#'
+#' @param ps_fit the stan fit of the single-pathogen Bayesian P-spline model.
+#' @param X list of dates/days over which the time series is defined.
+#' @param num_days the number of dates/days (default is length of X).
+#' @param time_labels descriptive labels for the values of X (e.g. may wish to provide the as.Date() objects to make plotting easier later).
+#' @param days_per_knot the number of days between each knot (default of 5 days is used in all analysis).
+#' @param spline_degree the spline degree used for the model (default of degree 3 is used in all analysis).
+#'
+#' @return data.frame() of modelled case incidence
+#'
 ps_single_incidence <- function(ps_fit,
                                 X,
                                 num_days = length(X), time_labels,
@@ -51,6 +61,20 @@ ps_single_incidence <- function(ps_fit,
   
 }
 
+
+#' Function for estimating the model posterior of case incidence including day-of-the-week effects (median and credible intervals) for the single-pathogen Bayesian P-spline model.
+#'
+#' @param ps_fit the stan fit of the single-pathogen Bayesian P-spline model.
+#' @param X list of dates/days over which the time series is defined.
+#' @param DOW numerical values describing the group of each value in the X time series if distinct effects were included for distinct days (i.e. repeating values of 1:7 when each day of week has a seperate effect)
+#' @param week_effect number descirbing the number of days that are modelled as having distinct effects (i.e. week_effect=7 when each day of week has a seperate effect)
+#' @param num_days the number of dates/days (default is length of X).
+#' @param time_labels descriptive labels for the values of X (e.g. may wish to provide the as.Date() objects to make plotting easier later).
+#' @param days_per_knot the number of days between each knot (default of 5 days is used in all analysis).
+#' @param spline_degree the spline degree used for the model (default of degree 3 is used in all analysis).
+#'
+#' @return data.frame() of modelled case incidence
+#'
 ps_single_incidence_dow <- function(ps_fit,
                                 X, DOW, week_effect,
                                 num_days = length(X), time_labels,
@@ -101,7 +125,18 @@ ps_single_incidence_dow <- function(ps_fit,
 }
 
 
-# Returns data.frame() of modeled growth rates
+
+#' Function for estimating the model posterior of growth rates (median and credible intervals) for the single-pathogen Bayesian P-spline model.
+#'
+#' @param ps_fit the stan fit of the single-pathogen Bayesian P-spline model.
+#' @param X list of dates/days over which the time series is defined.
+#' @param num_days the number of dates/days (default is length of X).
+#' @param time_labels descriptive labels for the values of X (e.g. may wish to provide the as.Date() objects to make plotting easier later).
+#' @param days_per_knot the number of days between each knot (default of 5 days is used in all analysis).
+#' @param spline_degree the spline degree used for the model (default of degree 3 is used in all analysis).
+#'
+#' @return data.frame() of modelled growth rate
+#'
 ps_single_growth_rate <- function(ps_fit,
                            X,
                            num_days = length(X), time_labels,
@@ -151,7 +186,18 @@ ps_single_growth_rate <- function(ps_fit,
 }
 
 
-# Returns data.frame() of modeled growth rates
+
+#' Function for estimating the model posterior of time-varying reproduction number (median and credible intervals) for the single-pathogen Bayesian P-spline model.
+#'
+#' @param ps_fit the stan fit of the single-pathogen Bayesian P-spline model.
+#' @param X list of dates/days over which the time series is defined.
+#' @param num_days the number of dates/days (default is length of X).
+#' @param time_labels descriptive labels for the values of X (e.g. may wish to provide the as.Date() objects to make plotting easier later).
+#' @param days_per_knot the number of days between each knot (default of 5 days is used in all analysis).
+#' @param spline_degree the spline degree used for the model (default of degree 3 is used in all analysis).
+#'
+#' @return data.frame() of modelled time-varying reproduction number
+#'
 ps_single_Rt <- function(ps_fit,
                   X,
                   num_days = length(X), time_labels,
