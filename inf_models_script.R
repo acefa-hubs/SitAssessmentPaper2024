@@ -33,11 +33,16 @@ df_inf <- df_inf[order(df_inf$time_index),]
 rstan::rstan_options(auto_write = TRUE)
 options(mc.cores = 4)
 
-# Loading Stan models
+# Loading stan model for Multi Pathogen Bayesian P-Spline model
+# See Eales et al 2025, American Journal of Epidemiology: Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model
 ps_inf_mod <- stan_model('stan/ps_influenza_finalV2.stan')
 
 ######################################################################################################################################################
 ## Fitting to influenza data (overall)
+# Multi-Pathogen Bayesian P-Spline model
+# See Eales et al 2025, American Journal of Epidemiology: Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model
+# Default options of days_per_knot = 5, and spline_degree = 3 used. Day-of-the-week effects are modelled (seperate effect for each day of the week (week_effect=7). Consider 3 distinct pathogens (influenza A H3N2, influenza A H1N1, and influenza B)
+
 
 # Calculate the locations of equally spaced knots
 knots <- get_knots(df_inf$time_index, days_per_knot = 5, spline_degree = 3)
@@ -67,6 +72,10 @@ saveRDS(inf_fit, paste('fitted_stan_models/', 'inf_fit-overall.rds', sep=""))
 
 #############################################################################################################################################
 ## Fitting to Influenza data (real-time analysis)
+# Multi-Pathogen Bayesian P-Spline model
+# See Eales et al 2025, American Journal of Epidemiology: Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model
+# Default options of days_per_knot = 5, and spline_degree = 3 used. Day-of-the-week effects are modelled (seperate effect for each day of the week (week_effect=7). Consider 3 distinct pathogens (influenza A H3N2, influenza A H1N1, and influenza B)
+
 
 max_dates_considered <- max(df_inf$notification_date) - seq(0, 7*25, by=7)
 
