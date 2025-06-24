@@ -1,6 +1,12 @@
 # SitAssessmentPaper2024
 This code supports the paper "Temporal analysis of respiratory virus epidemics in Victoria over winter 2024".
 
+## Statistical methods
+We fit Single Pathogen Bayesian P-Spline models to RSV and SARS-CoV-2 case data, and Multi Pathogen Bayesian P-Spline models to influenza case data and typing/subtyping data. The statistical methods are described in full in:
+[Eales O, Windecker SM, McCaw JM, Shearer FM. Inferring temporal trends of multiple pathogens, variants, subtypes or serotypes from routine surveillance data. Am J Epidemiol. 2025; kwaf119.](https://academic.oup.com/aje/advance-article/doi/10.1093/aje/kwaf119/8158080)
+Specifically, the relevant methods are described in the sections: ‘Statistical modelling framework’ and ‘Supplementary Methods: Penalised-spline model’. We use the default setting for Bayesian P-spline models used in the paper (days_per_knot = 5 days, spline_degree = 3). For the Multi Pathogen Bayesian P-spline model fit to influenza data we model the distinct dynamics of three pathogens (num_path = 3): influenza A H3N2, influenza A H1N1, and influenza B. 
+
+
 ## Running the code
 The R scripts "cov_models_script.R", "inf_models_script.R", and "rsv_models_script.R" fit all models from the paper onto the data for each pathogen (dummy data, see below) and save the model fits as ".rds" objects inside the subdirectory "fitted_stan_models/". The two R scipts "figure_script_1.R" and "figure_script_2.R" then read in the model fits and produce all the figures from the paper saving them in the "figure/" subdirecotry.
 
